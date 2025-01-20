@@ -45,19 +45,19 @@ i = 1               | 2
 while i < n:        | 3 * ([log2(n)] + 1)
     j = 1           | 2 * [log2(n)]
     while j < n:    | 3 * ([log2(n)] + 1) * log2(n)
-        k += 1      | 4 * [log2(n)]
-        j *= 2      | 4 * [log2(n)]
+        k += 1      | 4 * [log2(n)] * [log2(n)]
+        j *= 2      | 4 * [log2(n)]* [log2(n)]
     i *= 2          | 4 * [log2(n)]
 
-sum : 2 + 3 * (log2(n) + 1) + 2 * log2(n) + 3 * (log2(n) + 1) * log2(n) + 12 log2(n) =
-    = 3[log2(n)]^2 + 20[log2(n)] + 5
+sum : 2 + 3 * (log2(n) + 1) + 2 * log2(n) + 3 * (log2(n) + 1) * log2(n) + 8 [log2(n)]^2 + 4 * [log2(n)] =
+    = 11[log2(n)]^2 + 12[log2(n)] + 5
 
 # Code snippet f)
 // n = 2^m
 i = 1               | 2
 while i < n:        | 3 * (m + 1)
     j = i           | 2 * m
-    while j < n:    | 3 * ((m + 1), m, m - 1, ..., 2) = 3 * (m(m + 1) / 2) + 3
+    while j < n:    | 3 * ((m + 1) + m + (m - 1) +, ..., + 2) = 3 * (m(m + 1) / 2) + 3
         k += 1      | 4 * (m(m + 1) / 2)
         j *= 2      | 4 * (m(m + 1) / 2)
     i *= 2          | 4 * m
