@@ -1,0 +1,60 @@
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+/build/
+CMakeLists.txt.user
+Testing/
+CTestTestfile.cmake
+CTestCostData.txt
+cmake-build-debug
+cmake-build-release
+CMakeLists.txt
+CMakeSettings.json
+
+# CLion & JetBrains
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# Executables and build files
+*.out
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.pdb
+*.bin
+*.dSYM/
+*.stackdump
+*.executable
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Logs and coverage reports
+*.logпше
+*.tmp
+*.coverage
+*.gcno
+*.gcda
+
+# User-specific files
+*.user
+*.run.xml
+*.bak
+*.swp
+
+t01_12
+t01_13
+main.cpp
+build
