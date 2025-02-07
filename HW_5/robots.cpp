@@ -2,60 +2,100 @@
 #include <algorithm>
 #include <vector>
 
+struct Robot {
+    int processTime;
+    long int availableTime; //Time when robot will be available
+    bool operator<(const Robot& other) const {
+        if (other.availableTime == availableTime) {
+            return other.processTime > processTime;
+        }
+        return other.availableTime > availableTime;
+    }
+};
 
 class Solution {
-    int parts{};
-    std::vector<int> firstRobots, secondRobots;
+    int parts{}, firstRobotsAmount{}, secondRobotsAmount{};
+    std::vector<Robot> firstrobots, secondRobots;
 
 public:
     Solution() {
         std::cin >> parts;
-        input_robots(firstRobots);
-        input_robots(secondRobots);
+        input_robots(firstrobots, firstRobotsAmount);
+        input_robots(secondRobots, secondRobotsAmount);
+        sort(firstrobots);
+        sort(secondRobots);
     }
 
-    int binarySearchByAnswer() {
-        int l = 0;
-        int r = std::max(this->firstRobots[firstRobots.size() - 1],
-            this->secondRobots[secondRobots.size() - 1]) * this->parts;
+//region problem-solution-methods (Main methods for solving problem)
+    long int calculateNeededTime() {
+        long int maxTime = 0;
+        std::vector<long int> eachPartTime(parts, 0);
 
+        robotsNeededTime(firstrobots, firstRobotsAmount, eachPartTime, maxTime);
+        std::reverse(eachPartTime.begin(), eachPartTime.end());
+        robotsNeededTime(secondRobots, secondRobotsAmount, eachPartTime, maxTime);
+
+        return maxTime;
+    }
+
+    void robotsNeededTime(std::vector<Robot>& robots, int robotsAmount, std::vector<long int>& eachPartTime, long int& maxTime) const {
+        /*
+         * This function calculates the processing time for each part handled by robots
+         */
+
+        for (int i = 0; i < parts; i ++) {
+            Robot robot = robots[0];
+            robots.erase(robots.begin());
+
+            eachPartTime[i] += robot.availableTime;
+            if (eachPartTime[i] > maxTime) {
+                maxTime = eachPartTime[i];
+            }
+
+            robot.availableTime += robot.processTime;
+
+
+            int insertIndex = binarySearch(robots, robot);
+            robots.insert(robots.begin() + insertIndex, robot);
+        }
+    }
+//endregion
+
+//region algorithm-methods (helping functions for Main methods)
+    static int binarySearch(const std::vector<Robot>& robots, const Robot robot) {
+        int l = 0;
+        int r = robots.size();
         while (l < r) {
             int m = (l + r) / 2;
 
-            if (std::min(partsPerRobotType(m, this->firstRobots), partsPerRobotType(m, this->secondRobots)) > this->parts) {
-                r = m - 1;
-            }
-            else if (std::min(partsPerRobotType(m, this->firstRobots), partsPerRobotType(m, this->secondRobots)) == this->parts) {
-                return m;
+            if (robots[m] < robot) {
+                l = m + 1;
             }
             else {
-                l = m + 1;
+                r = m;
             }
         }
         return l;
     }
 
-    static int partsPerRobotType(const int time, const std::vector<int>& typeRobots) {
-        int sum = 0;
-        for (int robotTime : typeRobots) {
-            sum += time / robotTime;
-        }
-        return sum;
+    static void sort(std::vector<Robot>& robots) {
+        std::sort(robots.begin(), robots.end());
     }
 
-    static void input_robots(std::vector<int> &robots) {
-        int countRobots;
-        std::cin >> countRobots;
-        while (countRobots--) {
-            int time;
-            std::cin >> time;
-            robots.push_back(time);
+    static void input_robots(std::vector<Robot> &robots, int& robotsAmount) {
+        std::cin >> robotsAmount;
+        for (int i = 0; i < robotsAmount; i++) {
+            int processTime;
+            std::cin >> processTime;
+            robots.push_back({processTime, processTime});
         }
     }
+
+//endregion
 };
 
 
 int main() {
     Solution s;
-    std::cout << (s.binarySearchByAnswer());
+    std::cout << s.calculateNeededTime();
 }
