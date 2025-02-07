@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <vector>
 
+// time complexity: O(n + m + n \log n + m \log m + parts \cdot (n + m))
+
 struct Robot {
     int processTime;
     long int availableTime; //Time when robot will be available
@@ -22,8 +24,8 @@ public:
         std::cin >> parts;
         input_robots(firstrobots, firstRobotsAmount);
         input_robots(secondRobots, secondRobotsAmount);
-        sort(firstrobots);
-        sort(secondRobots);
+        std::sort(firstrobots.begin(), firstrobots.end());
+        std::sort(secondRobots.begin(), secondRobots.end());
     }
 
 //region problem-solution-methods (Main methods for solving problem)
@@ -76,10 +78,6 @@ public:
             }
         }
         return l;
-    }
-
-    static void sort(std::vector<Robot>& robots) {
-        std::sort(robots.begin(), robots.end());
     }
 
     static void input_robots(std::vector<Robot> &robots, int& robotsAmount) {
