@@ -22,8 +22,8 @@ class Solution {
 public:
     Solution() {
         std::cin >> parts;
-        input_robots(firstrobots, firstRobotsAmount);
-        input_robots(secondRobots, secondRobotsAmount);
+        inputRobots(firstrobots, firstRobotsAmount);
+        inputRobots(secondRobots, secondRobotsAmount);
         std::sort(firstrobots.begin(), firstrobots.end());
         std::sort(secondRobots.begin(), secondRobots.end());
     }
@@ -33,14 +33,14 @@ public:
         long int maxTime = 0;
         std::vector<long int> eachPartTime(parts, 0);
 
-        robotsNeededTime(firstrobots, firstRobotsAmount, eachPartTime, maxTime);
+        robotsNeededTime(firstrobots, eachPartTime, maxTime);
         std::reverse(eachPartTime.begin(), eachPartTime.end());
-        robotsNeededTime(secondRobots, secondRobotsAmount, eachPartTime, maxTime);
+        robotsNeededTime(secondRobots, eachPartTime, maxTime);
 
         return maxTime;
     }
 
-    void robotsNeededTime(std::vector<Robot>& robots, int robotsAmount, std::vector<long int>& eachPartTime, long int& maxTime) const {
+    void robotsNeededTime(std::vector<Robot>& robots, std::vector<long int>& eachPartTime, long int& maxTime) const {
         /*
          * This function calculates the processing time for each part handled by robots
          */
@@ -80,7 +80,7 @@ public:
         return l;
     }
 
-    static void input_robots(std::vector<Robot> &robots, int& robotsAmount) {
+    static void inputRobots(std::vector<Robot> &robots, int& robotsAmount) {
         std::cin >> robotsAmount;
         for (int i = 0; i < robotsAmount; i++) {
             int processTime;
