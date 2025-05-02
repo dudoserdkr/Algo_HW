@@ -125,4 +125,3 @@ if __name__ == '__main__':
     vg.generate_numbers(start)
 
     g.rebuild_path(start, finish)
-
